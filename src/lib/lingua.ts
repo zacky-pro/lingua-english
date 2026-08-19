@@ -37,7 +37,7 @@ export const XP_LEVELS = [
 ];
 
 export function xpLevel(xp: number) {
-  let current = XP_LEVELS[0];
+  let current = XP_LEVELS[0]!;
   for (const l of XP_LEVELS) if (xp >= l.min) current = l;
   const next = XP_LEVELS.find((l) => l.min > xp);
   const span = (next?.min ?? current.min + 2000) - current.min;
