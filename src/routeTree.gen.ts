@@ -14,6 +14,8 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedLearnIndexRouteImport } from './routes/_authenticated/learn/index'
+import { Route as AuthenticatedLearnSlugRouteImport } from './routes/_authenticated/learn/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -39,18 +41,32 @@ const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedLearnIndexRoute = AuthenticatedLearnIndexRouteImport.update({
+  id: '/learn/',
+  path: '/learn/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLearnSlugRoute = AuthenticatedLearnSlugRouteImport.update({
+  id: '/learn/$slug',
+  path: '/learn/$slug',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/learn/$slug': typeof AuthenticatedLearnSlugRoute
+  '/learn/': typeof AuthenticatedLearnIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/learn/$slug': typeof AuthenticatedLearnSlugRoute
+  '/learn': typeof AuthenticatedLearnIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -59,12 +75,15 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/learn/$slug': typeof AuthenticatedLearnSlugRoute
+  '/_authenticated/learn/': typeof AuthenticatedLearnIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/onboarding'
+  fullPaths:
+    '/' | '/auth' | '/dashboard' | '/onboarding' | '/learn/$slug' | '/learn/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/onboarding'
+  to: '/' | '/auth' | '/dashboard' | '/onboarding' | '/learn/$slug' | '/learn'
   id:
     | '__root__'
     | '/'
@@ -72,6 +91,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/dashboard'
     | '/_authenticated/onboarding'
+    | '/_authenticated/learn/$slug'
+    | '/_authenticated/learn/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -117,17 +138,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/learn/': {
+      id: '/_authenticated/learn/'
+      path: '/learn'
+      fullPath: '/learn/'
+      preLoaderRoute: typeof AuthenticatedLearnIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/learn/$slug': {
+      id: '/_authenticated/learn/$slug'
+      path: '/learn/$slug'
+      fullPath: '/learn/$slug'
+      preLoaderRoute: typeof AuthenticatedLearnSlugRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedLearnSlugRoute: typeof AuthenticatedLearnSlugRoute
+  AuthenticatedLearnIndexRoute: typeof AuthenticatedLearnIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedLearnSlugRoute: AuthenticatedLearnSlugRoute,
+  AuthenticatedLearnIndexRoute: AuthenticatedLearnIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
