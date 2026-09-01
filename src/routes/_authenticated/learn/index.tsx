@@ -31,7 +31,7 @@ function LearnMap() {
     <div className="space-y-8">
       <PageHeader
         title="Your learning path"
-        subtitle="Setiap level membuka kemampuan baru. Selesaikan pelajaran secara berurutan untuk hasil terbaik."
+        description="Setiap level membuka kemampuan baru. Selesaikan pelajaran secara berurutan untuk hasil terbaik."
       />
 
       {isLoading ? <CardSkeletonGrid count={3} height={200} /> : null}
