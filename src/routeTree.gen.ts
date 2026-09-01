@@ -14,6 +14,8 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
+import { Route as AuthenticatedVocabularyRouteImport } from './routes/_authenticated/vocabulary'
 import { Route as AuthenticatedLearnIndexRouteImport } from './routes/_authenticated/learn/index'
 import { Route as AuthenticatedLearnSlugRouteImport } from './routes/_authenticated/learn/$slug'
 
@@ -41,6 +43,16 @@ const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedVocabularyRoute = AuthenticatedVocabularyRouteImport.update({
+  id: '/vocabulary',
+  path: '/vocabulary',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedLearnIndexRoute = AuthenticatedLearnIndexRouteImport.update({
   id: '/learn/',
   path: '/learn/',
@@ -57,6 +69,8 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/review': typeof AuthenticatedReviewRoute
+  '/vocabulary': typeof AuthenticatedVocabularyRoute
   '/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/learn/': typeof AuthenticatedLearnIndexRoute
 }
@@ -65,6 +79,8 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/review': typeof AuthenticatedReviewRoute
+  '/vocabulary': typeof AuthenticatedVocabularyRoute
   '/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/learn': typeof AuthenticatedLearnIndexRoute
 }
@@ -75,15 +91,32 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/review': typeof AuthenticatedReviewRoute
+  '/_authenticated/vocabulary': typeof AuthenticatedVocabularyRoute
   '/_authenticated/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/_authenticated/learn/': typeof AuthenticatedLearnIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/dashboard' | '/onboarding' | '/learn/$slug' | '/learn/'
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/onboarding'
+    | '/review'
+    | '/vocabulary'
+    | '/learn/$slug'
+    | '/learn/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/onboarding' | '/learn/$slug' | '/learn'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/onboarding'
+    | '/review'
+    | '/vocabulary'
+    | '/learn/$slug'
+    | '/learn'
   id:
     | '__root__'
     | '/'
@@ -91,6 +124,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/dashboard'
     | '/_authenticated/onboarding'
+    | '/_authenticated/review'
+    | '/_authenticated/vocabulary'
     | '/_authenticated/learn/$slug'
     | '/_authenticated/learn/'
   fileRoutesById: FileRoutesById
@@ -138,6 +173,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/review': {
+      id: '/_authenticated/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof AuthenticatedReviewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/vocabulary': {
+      id: '/_authenticated/vocabulary'
+      path: '/vocabulary'
+      fullPath: '/vocabulary'
+      preLoaderRoute: typeof AuthenticatedVocabularyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/learn/': {
       id: '/_authenticated/learn/'
       path: '/learn'
@@ -158,6 +207,8 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
+  AuthenticatedVocabularyRoute: typeof AuthenticatedVocabularyRoute
   AuthenticatedLearnSlugRoute: typeof AuthenticatedLearnSlugRoute
   AuthenticatedLearnIndexRoute: typeof AuthenticatedLearnIndexRoute
 }
@@ -165,6 +216,8 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedReviewRoute: AuthenticatedReviewRoute,
+  AuthenticatedVocabularyRoute: AuthenticatedVocabularyRoute,
   AuthenticatedLearnSlugRoute: AuthenticatedLearnSlugRoute,
   AuthenticatedLearnIndexRoute: AuthenticatedLearnIndexRoute,
 }
