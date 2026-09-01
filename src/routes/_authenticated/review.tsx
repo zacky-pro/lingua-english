@@ -179,10 +179,10 @@ function ReviewPage() {
           <Button variant="destructive" className="gap-1.5" onClick={() => grade(0)}>
             <X className="size-4" aria-hidden /> Forgot
           </Button>
-          <Button variant="secondary" onClick={() => grade(3)}>
+          <Button variant="secondary" onClick={() => grade(1)}>
             Hard
           </Button>
-          <Button className="gap-1.5" onClick={() => grade(5)}>
+          <Button className="gap-1.5" onClick={() => grade(3)}>
             <Check className="size-4" aria-hidden /> Easy
           </Button>
         </div>
