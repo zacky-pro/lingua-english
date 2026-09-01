@@ -13,7 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedGrammarRouteImport } from './routes/_authenticated/grammar'
+import { Route as AuthenticatedListeningRouteImport } from './routes/_authenticated/listening'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedReadingRouteImport } from './routes/_authenticated/reading'
+import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
+import { Route as AuthenticatedVocabularyRouteImport } from './routes/_authenticated/vocabulary'
+import { Route as AuthenticatedWritingRouteImport } from './routes/_authenticated/writing'
 import { Route as AuthenticatedLearnIndexRouteImport } from './routes/_authenticated/learn/index'
 import { Route as AuthenticatedLearnSlugRouteImport } from './routes/_authenticated/learn/$slug'
 
@@ -36,9 +42,39 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedGrammarRoute = AuthenticatedGrammarRouteImport.update({
+  id: '/grammar',
+  path: '/grammar',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedListeningRoute = AuthenticatedListeningRouteImport.update({
+  id: '/listening',
+  path: '/listening',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReadingRoute = AuthenticatedReadingRouteImport.update({
+  id: '/reading',
+  path: '/reading',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedVocabularyRoute = AuthenticatedVocabularyRouteImport.update({
+  id: '/vocabulary',
+  path: '/vocabulary',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedWritingRoute = AuthenticatedWritingRouteImport.update({
+  id: '/writing',
+  path: '/writing',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedLearnIndexRoute = AuthenticatedLearnIndexRouteImport.update({
@@ -56,7 +92,13 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/grammar': typeof AuthenticatedGrammarRoute
+  '/listening': typeof AuthenticatedListeningRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/reading': typeof AuthenticatedReadingRoute
+  '/review': typeof AuthenticatedReviewRoute
+  '/vocabulary': typeof AuthenticatedVocabularyRoute
+  '/writing': typeof AuthenticatedWritingRoute
   '/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/learn/': typeof AuthenticatedLearnIndexRoute
 }
@@ -64,7 +106,13 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/grammar': typeof AuthenticatedGrammarRoute
+  '/listening': typeof AuthenticatedListeningRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/reading': typeof AuthenticatedReadingRoute
+  '/review': typeof AuthenticatedReviewRoute
+  '/vocabulary': typeof AuthenticatedVocabularyRoute
+  '/writing': typeof AuthenticatedWritingRoute
   '/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/learn': typeof AuthenticatedLearnIndexRoute
 }
@@ -74,23 +122,58 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/grammar': typeof AuthenticatedGrammarRoute
+  '/_authenticated/listening': typeof AuthenticatedListeningRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/reading': typeof AuthenticatedReadingRoute
+  '/_authenticated/review': typeof AuthenticatedReviewRoute
+  '/_authenticated/vocabulary': typeof AuthenticatedVocabularyRoute
+  '/_authenticated/writing': typeof AuthenticatedWritingRoute
   '/_authenticated/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/_authenticated/learn/': typeof AuthenticatedLearnIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/dashboard' | '/onboarding' | '/learn/$slug' | '/learn/'
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/grammar'
+    | '/listening'
+    | '/onboarding'
+    | '/reading'
+    | '/review'
+    | '/vocabulary'
+    | '/writing'
+    | '/learn/$slug'
+    | '/learn/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/onboarding' | '/learn/$slug' | '/learn'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/grammar'
+    | '/listening'
+    | '/onboarding'
+    | '/reading'
+    | '/review'
+    | '/vocabulary'
+    | '/writing'
+    | '/learn/$slug'
+    | '/learn'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/dashboard'
+    | '/_authenticated/grammar'
+    | '/_authenticated/listening'
     | '/_authenticated/onboarding'
+    | '/_authenticated/reading'
+    | '/_authenticated/review'
+    | '/_authenticated/vocabulary'
+    | '/_authenticated/writing'
     | '/_authenticated/learn/$slug'
     | '/_authenticated/learn/'
   fileRoutesById: FileRoutesById
@@ -131,11 +214,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/grammar': {
+      id: '/_authenticated/grammar'
+      path: '/grammar'
+      fullPath: '/grammar'
+      preLoaderRoute: typeof AuthenticatedGrammarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/listening': {
+      id: '/_authenticated/listening'
+      path: '/listening'
+      fullPath: '/listening'
+      preLoaderRoute: typeof AuthenticatedListeningRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/onboarding': {
       id: '/_authenticated/onboarding'
       path: '/onboarding'
       fullPath: '/onboarding'
       preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reading': {
+      id: '/_authenticated/reading'
+      path: '/reading'
+      fullPath: '/reading'
+      preLoaderRoute: typeof AuthenticatedReadingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/review': {
+      id: '/_authenticated/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof AuthenticatedReviewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/vocabulary': {
+      id: '/_authenticated/vocabulary'
+      path: '/vocabulary'
+      fullPath: '/vocabulary'
+      preLoaderRoute: typeof AuthenticatedVocabularyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/writing': {
+      id: '/_authenticated/writing'
+      path: '/writing'
+      fullPath: '/writing'
+      preLoaderRoute: typeof AuthenticatedWritingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/learn/': {
@@ -157,14 +282,26 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedGrammarRoute: typeof AuthenticatedGrammarRoute
+  AuthenticatedListeningRoute: typeof AuthenticatedListeningRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedReadingRoute: typeof AuthenticatedReadingRoute
+  AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
+  AuthenticatedVocabularyRoute: typeof AuthenticatedVocabularyRoute
+  AuthenticatedWritingRoute: typeof AuthenticatedWritingRoute
   AuthenticatedLearnSlugRoute: typeof AuthenticatedLearnSlugRoute
   AuthenticatedLearnIndexRoute: typeof AuthenticatedLearnIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedGrammarRoute: AuthenticatedGrammarRoute,
+  AuthenticatedListeningRoute: AuthenticatedListeningRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedReadingRoute: AuthenticatedReadingRoute,
+  AuthenticatedReviewRoute: AuthenticatedReviewRoute,
+  AuthenticatedVocabularyRoute: AuthenticatedVocabularyRoute,
+  AuthenticatedWritingRoute: AuthenticatedWritingRoute,
   AuthenticatedLearnSlugRoute: AuthenticatedLearnSlugRoute,
   AuthenticatedLearnIndexRoute: AuthenticatedLearnIndexRoute,
 }
