@@ -16,8 +16,10 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedGrammarRouteImport } from './routes/_authenticated/grammar'
 import { Route as AuthenticatedListeningRouteImport } from './routes/_authenticated/listening'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedReadingRouteImport } from './routes/_authenticated/reading'
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
 import { Route as AuthenticatedVocabularyRouteImport } from './routes/_authenticated/vocabulary'
+import { Route as AuthenticatedWritingRouteImport } from './routes/_authenticated/writing'
 import { Route as AuthenticatedLearnIndexRouteImport } from './routes/_authenticated/learn/index'
 import { Route as AuthenticatedLearnSlugRouteImport } from './routes/_authenticated/learn/$slug'
 
@@ -55,6 +57,11 @@ const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedReadingRoute = AuthenticatedReadingRouteImport.update({
+  id: '/reading',
+  path: '/reading',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
   id: '/review',
   path: '/review',
@@ -63,6 +70,11 @@ const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
 const AuthenticatedVocabularyRoute = AuthenticatedVocabularyRouteImport.update({
   id: '/vocabulary',
   path: '/vocabulary',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedWritingRoute = AuthenticatedWritingRouteImport.update({
+  id: '/writing',
+  path: '/writing',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedLearnIndexRoute = AuthenticatedLearnIndexRouteImport.update({
@@ -83,8 +95,10 @@ export interface FileRoutesByFullPath {
   '/grammar': typeof AuthenticatedGrammarRoute
   '/listening': typeof AuthenticatedListeningRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/reading': typeof AuthenticatedReadingRoute
   '/review': typeof AuthenticatedReviewRoute
   '/vocabulary': typeof AuthenticatedVocabularyRoute
+  '/writing': typeof AuthenticatedWritingRoute
   '/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/learn/': typeof AuthenticatedLearnIndexRoute
 }
@@ -95,8 +109,10 @@ export interface FileRoutesByTo {
   '/grammar': typeof AuthenticatedGrammarRoute
   '/listening': typeof AuthenticatedListeningRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/reading': typeof AuthenticatedReadingRoute
   '/review': typeof AuthenticatedReviewRoute
   '/vocabulary': typeof AuthenticatedVocabularyRoute
+  '/writing': typeof AuthenticatedWritingRoute
   '/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/learn': typeof AuthenticatedLearnIndexRoute
 }
@@ -109,8 +125,10 @@ export interface FileRoutesById {
   '/_authenticated/grammar': typeof AuthenticatedGrammarRoute
   '/_authenticated/listening': typeof AuthenticatedListeningRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/reading': typeof AuthenticatedReadingRoute
   '/_authenticated/review': typeof AuthenticatedReviewRoute
   '/_authenticated/vocabulary': typeof AuthenticatedVocabularyRoute
+  '/_authenticated/writing': typeof AuthenticatedWritingRoute
   '/_authenticated/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/_authenticated/learn/': typeof AuthenticatedLearnIndexRoute
 }
@@ -123,8 +141,10 @@ export interface FileRouteTypes {
     | '/grammar'
     | '/listening'
     | '/onboarding'
+    | '/reading'
     | '/review'
     | '/vocabulary'
+    | '/writing'
     | '/learn/$slug'
     | '/learn/'
   fileRoutesByTo: FileRoutesByTo
@@ -135,8 +155,10 @@ export interface FileRouteTypes {
     | '/grammar'
     | '/listening'
     | '/onboarding'
+    | '/reading'
     | '/review'
     | '/vocabulary'
+    | '/writing'
     | '/learn/$slug'
     | '/learn'
   id:
@@ -148,8 +170,10 @@ export interface FileRouteTypes {
     | '/_authenticated/grammar'
     | '/_authenticated/listening'
     | '/_authenticated/onboarding'
+    | '/_authenticated/reading'
     | '/_authenticated/review'
     | '/_authenticated/vocabulary'
+    | '/_authenticated/writing'
     | '/_authenticated/learn/$slug'
     | '/_authenticated/learn/'
   fileRoutesById: FileRoutesById
@@ -211,6 +235,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/reading': {
+      id: '/_authenticated/reading'
+      path: '/reading'
+      fullPath: '/reading'
+      preLoaderRoute: typeof AuthenticatedReadingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/review': {
       id: '/_authenticated/review'
       path: '/review'
@@ -223,6 +254,13 @@ declare module '@tanstack/react-router' {
       path: '/vocabulary'
       fullPath: '/vocabulary'
       preLoaderRoute: typeof AuthenticatedVocabularyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/writing': {
+      id: '/_authenticated/writing'
+      path: '/writing'
+      fullPath: '/writing'
+      preLoaderRoute: typeof AuthenticatedWritingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/learn/': {
@@ -247,8 +285,10 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedGrammarRoute: typeof AuthenticatedGrammarRoute
   AuthenticatedListeningRoute: typeof AuthenticatedListeningRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedReadingRoute: typeof AuthenticatedReadingRoute
   AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
   AuthenticatedVocabularyRoute: typeof AuthenticatedVocabularyRoute
+  AuthenticatedWritingRoute: typeof AuthenticatedWritingRoute
   AuthenticatedLearnSlugRoute: typeof AuthenticatedLearnSlugRoute
   AuthenticatedLearnIndexRoute: typeof AuthenticatedLearnIndexRoute
 }
@@ -258,8 +298,10 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedGrammarRoute: AuthenticatedGrammarRoute,
   AuthenticatedListeningRoute: AuthenticatedListeningRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedReadingRoute: AuthenticatedReadingRoute,
   AuthenticatedReviewRoute: AuthenticatedReviewRoute,
   AuthenticatedVocabularyRoute: AuthenticatedVocabularyRoute,
+  AuthenticatedWritingRoute: AuthenticatedWritingRoute,
   AuthenticatedLearnSlugRoute: AuthenticatedLearnSlugRoute,
   AuthenticatedLearnIndexRoute: AuthenticatedLearnIndexRoute,
 }
