@@ -67,26 +67,28 @@ function ReviewPage() {
 
   const card = cards?.[index];
 
-  async function grade(quality: 0 | 3 | 5) {
+  async function grade(quality: 0 | 1 | 2 | 3) {
     if (!card) return;
-    const next = scheduleReview(
-      { ease: card.ease, intervalDays: card.interval_days, reps: card.reps, lapses: card.lapses },
-      quality,
-    );
+    const next = scheduleReview(quality, {
+      ease: card.ease,
+      interval_days: card.interval_days,
+      reps: card.reps,
+      lapses: card.lapses,
+    });
     await supabase
       .from("user_vocabulary")
       .update({
         ease: next.ease,
-        interval_days: next.intervalDays,
+        interval_days: next.interval_days,
         reps: next.reps,
         lapses: next.lapses,
-        status: next.reps >= 5 ? "mastered" : "learning",
-        due_at: next.dueAt,
+        status: next.status,
+        due_at: next.due_at,
         updated_at: new Date().toISOString(),
       })
       .eq("id", card.id);
 
-    const good = quality >= 3;
+    const good = quality >= 2;
     const nextCorrect = correct + (good ? 1 : 0);
     setCorrect(nextCorrect);
     setRevealed(false);
