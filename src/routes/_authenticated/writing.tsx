@@ -158,9 +158,13 @@ function WritingPage() {
 
       {feedback ? (
         <div className="surface-card animate-pop-in space-y-4 p-5">
-          <div className="flex items-center gap-3">
-            <span className="font-display text-3xl font-extrabold text-primary">{feedback.score}</span>
-            <span className="text-sm text-muted-foreground">out of 100</span>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+            {Object.entries(feedback.scores).map(([key, value]) => (
+              <div key={key} className="rounded-xl bg-muted/60 p-3 text-center">
+                <p className="font-display text-2xl font-extrabold text-primary">{value}</p>
+                <p className="text-xs capitalize text-muted-foreground">{key}</p>
+              </div>
+            ))}
           </div>
           <div>
             <h3 className="text-sm font-semibold">Improved version</h3>
@@ -171,13 +175,12 @@ function WritingPage() {
             <ul className="mt-2 space-y-2">
               {feedback.explanations.map((e, i) => (
                 <li key={i} className="rounded-xl bg-muted/60 p-3 text-sm">
-                  <strong>{e.change}</strong>
-                  <span className="mt-0.5 block text-muted-foreground">{e.why}</span>
+                  {e}
                 </li>
               ))}
             </ul>
           </div>
-          <p className="rounded-xl bg-primary-soft p-3 text-sm text-primary">💡 {feedback.tip}</p>
+          <p className="rounded-xl bg-primary-soft p-3 text-sm text-primary">💡 {feedback.encouragement}</p>
         </div>
       ) : null}
     </div>
