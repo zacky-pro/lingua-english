@@ -61,7 +61,7 @@ function SpeakingPage() {
   const { data: profile } = useProfile();
   const award = useAward();
   const getFeedback = useServerFn(speakingFeedback);
-  const [prompt, setPrompt] = useState(PROMPTS[0]);
+  const [prompt, setPrompt] = useState<string>(PROMPTS[0]!);
   const [transcript, setTranscript] = useState("");
   const [listening, setListening] = useState(false);
   const [supported, setSupported] = useState(true);
@@ -85,7 +85,7 @@ function SpeakingPage() {
     rec.interimResults = false;
     rec.onresult = (event) => {
       let text = "";
-      for (let i = 0; i < event.results.length; i++) text += `${event.results[i][0].transcript} `;
+      for (let i = 0; i < event.results.length; i++) text += `${event.results[i]?.[0]?.transcript ?? ""} `;
       setTranscript(text.trim());
     };
     rec.onerror = () => setListening(false);
