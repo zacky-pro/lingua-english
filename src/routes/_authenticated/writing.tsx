@@ -36,10 +36,16 @@ type Prompt = {
 };
 
 type Feedback = {
-  score: number;
+  scores: {
+    grammar: number;
+    vocabulary: number;
+    structure: number;
+    clarity: number;
+    naturalness: number;
+  };
   improved: string;
-  explanations: { change: string; why: string }[];
-  tip: string;
+  explanations: string[];
+  encouragement: string;
 };
 
 function WritingPage() {
