@@ -71,7 +71,7 @@ function WritingPage() {
   const submit = useMutation({
     mutationFn: async () => {
       const result = (await getFeedback({
-        data: { text, prompt: selected?.prompt ?? "Free writing", level: profile?.level_code ?? "A1" },
+        data: { content: text, prompt: selected?.prompt ?? "Free writing", level: profile?.level_code ?? "A1" },
       })) as Feedback;
       const { data: auth } = await supabase.auth.getUser();
       if (auth.user) {
