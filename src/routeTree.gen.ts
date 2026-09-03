@@ -20,6 +20,7 @@ import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenti
 import { Route as AuthenticatedLibraryRouteImport } from './routes/_authenticated/library'
 import { Route as AuthenticatedListeningRouteImport } from './routes/_authenticated/listening'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedPlacementRouteImport } from './routes/_authenticated/placement'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedProgressRouteImport } from './routes/_authenticated/progress'
 import { Route as AuthenticatedReadingRouteImport } from './routes/_authenticated/reading'
@@ -88,6 +89,11 @@ const AuthenticatedListeningRoute = AuthenticatedListeningRouteImport.update({
 const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPlacementRoute = AuthenticatedPlacementRouteImport.update({
+  id: '/placement',
+  path: '/placement',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
@@ -162,6 +168,7 @@ export interface FileRoutesByFullPath {
   '/library': typeof AuthenticatedLibraryRoute
   '/listening': typeof AuthenticatedListeningRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/placement': typeof AuthenticatedPlacementRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/progress': typeof AuthenticatedProgressRoute
   '/reading': typeof AuthenticatedReadingRoute
@@ -186,6 +193,7 @@ export interface FileRoutesByTo {
   '/library': typeof AuthenticatedLibraryRoute
   '/listening': typeof AuthenticatedListeningRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/placement': typeof AuthenticatedPlacementRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/progress': typeof AuthenticatedProgressRoute
   '/reading': typeof AuthenticatedReadingRoute
@@ -212,6 +220,7 @@ export interface FileRoutesById {
   '/_authenticated/library': typeof AuthenticatedLibraryRoute
   '/_authenticated/listening': typeof AuthenticatedListeningRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/placement': typeof AuthenticatedPlacementRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/progress': typeof AuthenticatedProgressRoute
   '/_authenticated/reading': typeof AuthenticatedReadingRoute
@@ -238,6 +247,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/listening'
     | '/onboarding'
+    | '/placement'
     | '/profile'
     | '/progress'
     | '/reading'
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/listening'
     | '/onboarding'
+    | '/placement'
     | '/profile'
     | '/progress'
     | '/reading'
@@ -287,6 +298,7 @@ export interface FileRouteTypes {
     | '/_authenticated/library'
     | '/_authenticated/listening'
     | '/_authenticated/onboarding'
+    | '/_authenticated/placement'
     | '/_authenticated/profile'
     | '/_authenticated/progress'
     | '/_authenticated/reading'
@@ -386,6 +398,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/placement': {
+      id: '/_authenticated/placement'
+      path: '/placement'
+      fullPath: '/placement'
+      preLoaderRoute: typeof AuthenticatedPlacementRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
       path: '/profile'
@@ -482,6 +501,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedLibraryRoute: typeof AuthenticatedLibraryRoute
   AuthenticatedListeningRoute: typeof AuthenticatedListeningRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedPlacementRoute: typeof AuthenticatedPlacementRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedProgressRoute: typeof AuthenticatedProgressRoute
   AuthenticatedReadingRoute: typeof AuthenticatedReadingRoute
@@ -505,6 +525,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedLibraryRoute: AuthenticatedLibraryRoute,
   AuthenticatedListeningRoute: AuthenticatedListeningRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedPlacementRoute: AuthenticatedPlacementRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedProgressRoute: AuthenticatedProgressRoute,
   AuthenticatedReadingRoute: AuthenticatedReadingRoute,
