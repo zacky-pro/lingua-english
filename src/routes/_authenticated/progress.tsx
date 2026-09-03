@@ -109,7 +109,7 @@ function ProgressPage() {
       <section className="surface-card p-5">
         <h2 className="font-display text-lg font-bold">Current level</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          {profile?.level_code} — {meta?.title}. {meta?.description}
+          {profile?.level_code} — {meta?.name}. {meta?.blurb}
         </p>
         <div className="mt-3">
           <ProgressBar value={level.progress} label="Progress to next XP level" />

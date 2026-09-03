@@ -16,11 +16,15 @@ import { Route as AuthenticatedAchievementsRouteImport } from './routes/_authent
 import { Route as AuthenticatedConversationRouteImport } from './routes/_authenticated/conversation'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedGrammarRouteImport } from './routes/_authenticated/grammar'
+import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenticated/leaderboard'
 import { Route as AuthenticatedLibraryRouteImport } from './routes/_authenticated/library'
 import { Route as AuthenticatedListeningRouteImport } from './routes/_authenticated/listening'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedProgressRouteImport } from './routes/_authenticated/progress'
 import { Route as AuthenticatedReadingRouteImport } from './routes/_authenticated/reading'
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedSpeakingRouteImport } from './routes/_authenticated/speaking'
 import { Route as AuthenticatedTranslateRouteImport } from './routes/_authenticated/translate'
 import { Route as AuthenticatedTutorRouteImport } from './routes/_authenticated/tutor'
@@ -65,6 +69,12 @@ const AuthenticatedGrammarRoute = AuthenticatedGrammarRouteImport.update({
   path: '/grammar',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedLeaderboardRoute =
+  AuthenticatedLeaderboardRouteImport.update({
+    id: '/leaderboard',
+    path: '/leaderboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedLibraryRoute = AuthenticatedLibraryRouteImport.update({
   id: '/library',
   path: '/library',
@@ -80,6 +90,16 @@ const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProgressRoute = AuthenticatedProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedReadingRoute = AuthenticatedReadingRouteImport.update({
   id: '/reading',
   path: '/reading',
@@ -88,6 +108,11 @@ const AuthenticatedReadingRoute = AuthenticatedReadingRouteImport.update({
 const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
   id: '/review',
   path: '/review',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedSpeakingRoute = AuthenticatedSpeakingRouteImport.update({
@@ -133,11 +158,15 @@ export interface FileRoutesByFullPath {
   '/conversation': typeof AuthenticatedConversationRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/grammar': typeof AuthenticatedGrammarRoute
+  '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/library': typeof AuthenticatedLibraryRoute
   '/listening': typeof AuthenticatedListeningRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/progress': typeof AuthenticatedProgressRoute
   '/reading': typeof AuthenticatedReadingRoute
   '/review': typeof AuthenticatedReviewRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/speaking': typeof AuthenticatedSpeakingRoute
   '/translate': typeof AuthenticatedTranslateRoute
   '/tutor': typeof AuthenticatedTutorRoute
@@ -153,11 +182,15 @@ export interface FileRoutesByTo {
   '/conversation': typeof AuthenticatedConversationRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/grammar': typeof AuthenticatedGrammarRoute
+  '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/library': typeof AuthenticatedLibraryRoute
   '/listening': typeof AuthenticatedListeningRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/progress': typeof AuthenticatedProgressRoute
   '/reading': typeof AuthenticatedReadingRoute
   '/review': typeof AuthenticatedReviewRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/speaking': typeof AuthenticatedSpeakingRoute
   '/translate': typeof AuthenticatedTranslateRoute
   '/tutor': typeof AuthenticatedTutorRoute
@@ -175,11 +208,15 @@ export interface FileRoutesById {
   '/_authenticated/conversation': typeof AuthenticatedConversationRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/grammar': typeof AuthenticatedGrammarRoute
+  '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/_authenticated/library': typeof AuthenticatedLibraryRoute
   '/_authenticated/listening': typeof AuthenticatedListeningRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/progress': typeof AuthenticatedProgressRoute
   '/_authenticated/reading': typeof AuthenticatedReadingRoute
   '/_authenticated/review': typeof AuthenticatedReviewRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/speaking': typeof AuthenticatedSpeakingRoute
   '/_authenticated/translate': typeof AuthenticatedTranslateRoute
   '/_authenticated/tutor': typeof AuthenticatedTutorRoute
@@ -197,11 +234,15 @@ export interface FileRouteTypes {
     | '/conversation'
     | '/dashboard'
     | '/grammar'
+    | '/leaderboard'
     | '/library'
     | '/listening'
     | '/onboarding'
+    | '/profile'
+    | '/progress'
     | '/reading'
     | '/review'
+    | '/settings'
     | '/speaking'
     | '/translate'
     | '/tutor'
@@ -217,11 +258,15 @@ export interface FileRouteTypes {
     | '/conversation'
     | '/dashboard'
     | '/grammar'
+    | '/leaderboard'
     | '/library'
     | '/listening'
     | '/onboarding'
+    | '/profile'
+    | '/progress'
     | '/reading'
     | '/review'
+    | '/settings'
     | '/speaking'
     | '/translate'
     | '/tutor'
@@ -238,11 +283,15 @@ export interface FileRouteTypes {
     | '/_authenticated/conversation'
     | '/_authenticated/dashboard'
     | '/_authenticated/grammar'
+    | '/_authenticated/leaderboard'
     | '/_authenticated/library'
     | '/_authenticated/listening'
     | '/_authenticated/onboarding'
+    | '/_authenticated/profile'
+    | '/_authenticated/progress'
     | '/_authenticated/reading'
     | '/_authenticated/review'
+    | '/_authenticated/settings'
     | '/_authenticated/speaking'
     | '/_authenticated/translate'
     | '/_authenticated/tutor'
@@ -309,6 +358,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedGrammarRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/leaderboard': {
+      id: '/_authenticated/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/leaderboard'
+      preLoaderRoute: typeof AuthenticatedLeaderboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/library': {
       id: '/_authenticated/library'
       path: '/library'
@@ -330,6 +386,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/progress': {
+      id: '/_authenticated/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof AuthenticatedProgressRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/reading': {
       id: '/_authenticated/reading'
       path: '/reading'
@@ -342,6 +412,13 @@ declare module '@tanstack/react-router' {
       path: '/review'
       fullPath: '/review'
       preLoaderRoute: typeof AuthenticatedReviewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/speaking': {
@@ -401,11 +478,15 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedConversationRoute: typeof AuthenticatedConversationRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedGrammarRoute: typeof AuthenticatedGrammarRoute
+  AuthenticatedLeaderboardRoute: typeof AuthenticatedLeaderboardRoute
   AuthenticatedLibraryRoute: typeof AuthenticatedLibraryRoute
   AuthenticatedListeningRoute: typeof AuthenticatedListeningRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedProgressRoute: typeof AuthenticatedProgressRoute
   AuthenticatedReadingRoute: typeof AuthenticatedReadingRoute
   AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedSpeakingRoute: typeof AuthenticatedSpeakingRoute
   AuthenticatedTranslateRoute: typeof AuthenticatedTranslateRoute
   AuthenticatedTutorRoute: typeof AuthenticatedTutorRoute
@@ -420,11 +501,15 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedConversationRoute: AuthenticatedConversationRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedGrammarRoute: AuthenticatedGrammarRoute,
+  AuthenticatedLeaderboardRoute: AuthenticatedLeaderboardRoute,
   AuthenticatedLibraryRoute: AuthenticatedLibraryRoute,
   AuthenticatedListeningRoute: AuthenticatedListeningRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedProgressRoute: AuthenticatedProgressRoute,
   AuthenticatedReadingRoute: AuthenticatedReadingRoute,
   AuthenticatedReviewRoute: AuthenticatedReviewRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedSpeakingRoute: AuthenticatedSpeakingRoute,
   AuthenticatedTranslateRoute: AuthenticatedTranslateRoute,
   AuthenticatedTutorRoute: AuthenticatedTutorRoute,

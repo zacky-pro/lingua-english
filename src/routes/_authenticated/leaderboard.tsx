@@ -56,11 +56,8 @@ function LeaderboardPage() {
           icon={Sparkles}
           title="Join the leaderboard"
           description="Share only your nickname, avatar and XP with other learners."
-          action={
-            <Button onClick={() => update.mutate({ leaderboard_opt_in: true })} disabled={update.isPending}>
-              Join leaderboard
-            </Button>
-          }
+          actionLabel="Join leaderboard"
+          onAction={() => update.mutate({ leaderboard_opt_in: true })}
         />
       ) : (
         <>
