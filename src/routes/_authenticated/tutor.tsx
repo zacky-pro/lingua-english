@@ -26,10 +26,12 @@ export const Route = createFileRoute("/_authenticated/tutor")({
 });
 
 const MODES = [
-  { key: "explain", label: "Explain" },
-  { key: "correct", label: "Correct my sentence" },
-  { key: "simplify", label: "Say it simpler" },
-  { key: "examples", label: "Give examples" },
+  { key: "normal", label: "Explain" },
+  { key: "simpler", label: "Say it simpler" },
+  { key: "example", label: "Give examples" },
+  { key: "translate", label: "In Indonesian" },
+  { key: "quiz", label: "Mini quiz" },
+  { key: "practice", label: "Practice with me" },
 ];
 
 const STARTERS = [
@@ -44,7 +46,7 @@ type Msg = { role: "user" | "assistant"; content: string };
 function TutorPage() {
   const { data: profile } = useProfile();
   const ask = useServerFn(askTutor);
-  const [mode, setMode] = useState("explain");
+  const [mode, setMode] = useState<"normal" | "simpler" | "example" | "translate" | "quiz" | "practice">("normal");
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const endRef = useRef<HTMLDivElement>(null);
@@ -79,7 +81,7 @@ function TutorPage() {
           <button
             key={m.key}
             type="button"
-            onClick={() => setMode(m.key)}
+            onClick={() => setMode(m.key as typeof mode)}
             aria-pressed={mode === m.key}
             className={cn(
               "rounded-full border px-3 py-1.5 text-xs transition-colors",

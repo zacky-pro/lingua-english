@@ -29,15 +29,15 @@ type Achievement = {
 };
 
 function AchievementsPage() {
-  const { data: user } = useSessionUser();
+  const { userId } = useSessionUser();
 
   const { data, isLoading } = useQuery({
-    queryKey: ["achievements", user?.id],
-    enabled: !!user,
+    queryKey: ["achievements", userId],
+    enabled: !!userId,
     queryFn: async () => {
       const [all, mine] = await Promise.all([
         supabase.from("achievements").select("*").order("sort_order"),
-        supabase.from("user_achievements").select("*").eq("user_id", user!.id),
+        supabase.from("user_achievements").select("*").eq("user_id", userId!),
       ]);
       if (all.error) throw all.error;
       if (mine.error) throw mine.error;
