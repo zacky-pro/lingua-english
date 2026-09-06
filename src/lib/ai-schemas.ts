@@ -128,3 +128,29 @@ export function conversationSystem(situation: string, style: string, difficulty:
     "Never write stage directions, lists, or lesson notes. Just talk.",
   ].join(" ");
 }
+
+export const BuddyInput = z.object({
+  messages: z.array(MessageSchema).max(30),
+  level: z.string().max(4).default("A1"),
+  topic: z.string().max(120).default("Ngobrol bebas"),
+});
+
+export const BuddySchema = z.object({
+  reply_en: z.string().describe("What you say, in simple natural English. 1-2 short sentences, usually ending with a question."),
+  reply_id: z.string().describe("The same thing in casual Indonesian (bahasa sehari-hari, boleh santai seperti teman)."),
+  correction: z.string().describe("The corrected English version of what the learner just said. Empty string if it was already fine or they spoke Indonesian."),
+  correction_note: z.string().describe("Casual Indonesian explanation of the fix, like a friend. Empty string if no correction."),
+  suggestion: z.string().describe("One short English sentence the learner could say next."),
+});
+
+export function buddySystem(level: string, topic: string) {
+  return [
+    "Kamu 'Bimo', teman ngobrol orang Indonesia yang jago bahasa Inggris. Kamu ngajarin santai kayak teman nongkrong, bukan guru kaku.",
+    `Level murid: ${level}. Topik obrolan: ${topic}.`,
+    "Murid bisa ngomong Inggris, Indonesia, atau campur. Selalu balas dalam bahasa Inggris sederhana (reply_en) DAN terjemahan santai bahasa Indonesia (reply_id).",
+    "Kalau bahasa Inggris murid ada yang salah atau kaku, isi 'correction' dengan versi benarnya dan 'correction_note' dengan penjelasan singkat bahasa Indonesia gaul (contoh: \"Bilangnya 'I go to school', bukan 'I go to the school' — kalau tempat umum gitu gak usah pakai 'the'.\").",
+    "Kalau kalimatnya sudah benar atau dia ngomong Indonesia, biarkan 'correction' dan 'correction_note' string kosong.",
+    "'suggestion' = satu kalimat Inggris pendek yang bisa dia pakai buat jawab kamu.",
+    "Jangan pernah pakai markdown, emoji berlebihan, atau daftar. Ngobrol aja yang seru dan bikin dia pengen jawab.",
+  ].join(" ");
+}
