@@ -4,6 +4,9 @@ import { generateText, Output } from "ai";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { gateway } from "./ai-gateway.server";
 import {
+  BuddyInput,
+  BuddySchema,
+  buddySystem,
   ConversationInput,
   ReviewInput,
   ReviewSchema,
@@ -93,6 +96,19 @@ export const translateForLearning = createServerFn({ method: "POST" })
       output: Output.object({ schema: TranslateSchema }),
       system: `You are a learning-focused translator for a ${data.level} learner. Translate ${data.direction === "id-en" ? "Indonesian to English" : "English to Indonesian"}. Then explain the grammar choice simply (in Bahasa Indonesia), give natural alternatives, and list key words with meanings. Teaching matters more than the translation itself.`,
       prompt: data.text,
+    });
+    return result.output;
+  });
+
+export const buddyReply = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => BuddyInput.parse(input))
+  .handler(async ({ data }) => {
+    const result = await generateText({
+      model: gateway(),
+      output: Output.object({ schema: BuddySchema }),
+      system: buddySystem(data.level, data.topic),
+      messages: data.messages,
     });
     return result.output;
   });

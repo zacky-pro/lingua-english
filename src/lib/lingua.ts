@@ -144,18 +144,55 @@ export const VOCAB_CATEGORIES = [
 ];
 
 /** Browser text-to-speech with graceful fallback. */
-export function speak(text: string, rate = 1) {
+export function speak(text: string, rate = 1, lang = "en-US", onEnd?: () => void) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
   try {
     window.speechSynthesis.cancel();
     const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = "en-US";
+    utter.lang = lang;
     utter.rate = rate;
+    if (onEnd) {
+      utter.onend = () => onEnd();
+      utter.onerror = () => onEnd();
+    }
     window.speechSynthesis.speak(utter);
     return true;
   } catch {
     return false;
   }
+}
+
+/** Speak an English line, then its Indonesian translation with an Indonesian voice. */
+export function speakBilingual(en: string, id: string, onDone?: () => void) {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
+  try {
+    window.speechSynthesis.cancel();
+    const queue: { text: string; lang: string; rate: number }[] = [];
+    if (en.trim()) queue.push({ text: en, lang: "en-US", rate: 0.95 });
+    if (id.trim()) queue.push({ text: id, lang: "id-ID", rate: 1 });
+    let i = 0;
+    const next = () => {
+      const item = queue[i++];
+      if (!item) {
+        onDone?.();
+        return;
+      }
+      const utter = new SpeechSynthesisUtterance(item.text);
+      utter.lang = item.lang;
+      utter.rate = item.rate;
+      utter.onend = next;
+      utter.onerror = next;
+      window.speechSynthesis.speak(utter);
+    };
+    next();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function stopSpeaking() {
+  if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
 }
 
 export function speechSupported() {
