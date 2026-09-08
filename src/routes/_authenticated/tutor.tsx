@@ -7,6 +7,7 @@ import { toast } from "sonner";
 
 import { AudioButton } from "@/components/lingua/AudioButton";
 import { PageHeader } from "@/components/lingua/primitives";
+import { RichText, plainText } from "@/components/lingua/RichText";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useProfile } from "@/hooks/useLingua";
@@ -65,7 +66,8 @@ function TutorPage() {
       })) as { reply: string };
       setMessages([...next, { role: "assistant", content: res.reply }]);
     },
-    onError: () => toast.error("The tutor is unavailable right now. Please try again."),
+    onError: (err: unknown) =>
+      toast.error(err instanceof Error && err.message ? err.message : "The tutor is unavailable right now. Please try again."),
   });
 
   return (
@@ -112,15 +114,20 @@ function TutorPage() {
 
         {messages.map((m, i) => (
           <div key={i} className={cn("flex items-end gap-2", m.role === "user" ? "justify-end" : "justify-start")}>
-            {m.role === "assistant" ? <AudioButton text={m.content} label="Play answer" /> : null}
-            <p
+            {m.role === "assistant" ? <AudioButton text={plainText(m.content)} label="Play answer" /> : null}
+            <div
               className={cn(
-                "max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2.5 text-sm",
+                "max-w-[85%] rounded-2xl px-4 py-2.5 text-sm",
                 m.role === "user" ? "rounded-br-sm bg-primary text-primary-foreground" : "rounded-bl-sm bg-muted",
               )}
             >
-              {m.content}
-            </p>
+              {m.role === "assistant" ? (
+                <RichText text={m.content} />
+              ) : (
+                <p className="whitespace-pre-wrap">{m.content}</p>
+              )}
+            </div>
+
           </div>
         ))}
         {send.isPending ? (

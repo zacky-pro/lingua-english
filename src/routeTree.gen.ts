@@ -19,6 +19,7 @@ import { Route as AuthenticatedGrammarRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenticated/leaderboard'
 import { Route as AuthenticatedLibraryRouteImport } from './routes/_authenticated/library'
 import { Route as AuthenticatedListeningRouteImport } from './routes/_authenticated/listening'
+import { Route as AuthenticatedLiveRouteImport } from './routes/_authenticated/live'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedPlacementRouteImport } from './routes/_authenticated/placement'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
@@ -84,6 +85,11 @@ const AuthenticatedLibraryRoute = AuthenticatedLibraryRouteImport.update({
 const AuthenticatedListeningRoute = AuthenticatedListeningRouteImport.update({
   id: '/listening',
   path: '/listening',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLiveRoute = AuthenticatedLiveRouteImport.update({
+  id: '/live',
+  path: '/live',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
@@ -167,6 +173,7 @@ export interface FileRoutesByFullPath {
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/library': typeof AuthenticatedLibraryRoute
   '/listening': typeof AuthenticatedListeningRoute
+  '/live': typeof AuthenticatedLiveRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/placement': typeof AuthenticatedPlacementRoute
   '/profile': typeof AuthenticatedProfileRoute
@@ -192,6 +199,7 @@ export interface FileRoutesByTo {
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/library': typeof AuthenticatedLibraryRoute
   '/listening': typeof AuthenticatedListeningRoute
+  '/live': typeof AuthenticatedLiveRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/placement': typeof AuthenticatedPlacementRoute
   '/profile': typeof AuthenticatedProfileRoute
@@ -219,6 +227,7 @@ export interface FileRoutesById {
   '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/_authenticated/library': typeof AuthenticatedLibraryRoute
   '/_authenticated/listening': typeof AuthenticatedListeningRoute
+  '/_authenticated/live': typeof AuthenticatedLiveRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/placement': typeof AuthenticatedPlacementRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
@@ -246,6 +255,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/library'
     | '/listening'
+    | '/live'
     | '/onboarding'
     | '/placement'
     | '/profile'
@@ -271,6 +281,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/library'
     | '/listening'
+    | '/live'
     | '/onboarding'
     | '/placement'
     | '/profile'
@@ -297,6 +308,7 @@ export interface FileRouteTypes {
     | '/_authenticated/leaderboard'
     | '/_authenticated/library'
     | '/_authenticated/listening'
+    | '/_authenticated/live'
     | '/_authenticated/onboarding'
     | '/_authenticated/placement'
     | '/_authenticated/profile'
@@ -389,6 +401,13 @@ declare module '@tanstack/react-router' {
       path: '/listening'
       fullPath: '/listening'
       preLoaderRoute: typeof AuthenticatedListeningRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/live': {
+      id: '/_authenticated/live'
+      path: '/live'
+      fullPath: '/live'
+      preLoaderRoute: typeof AuthenticatedLiveRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/onboarding': {
@@ -500,6 +519,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedLeaderboardRoute: typeof AuthenticatedLeaderboardRoute
   AuthenticatedLibraryRoute: typeof AuthenticatedLibraryRoute
   AuthenticatedListeningRoute: typeof AuthenticatedListeningRoute
+  AuthenticatedLiveRoute: typeof AuthenticatedLiveRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedPlacementRoute: typeof AuthenticatedPlacementRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
@@ -524,6 +544,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedLeaderboardRoute: AuthenticatedLeaderboardRoute,
   AuthenticatedLibraryRoute: AuthenticatedLibraryRoute,
   AuthenticatedListeningRoute: AuthenticatedListeningRoute,
+  AuthenticatedLiveRoute: AuthenticatedLiveRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedPlacementRoute: AuthenticatedPlacementRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
