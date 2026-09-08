@@ -51,6 +51,7 @@ export const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
       { to: "/grammar", label: "Grammar", icon: SpellCheck },
       { to: "/listening", label: "Listening", icon: Headphones },
       { to: "/speaking", label: "Speaking", icon: Mic },
+      { to: "/live", label: "Ngobrol Live", icon: Sparkles },
       { to: "/conversation", label: "Real Talk", icon: MessageCircle },
       { to: "/reading", label: "Reading", icon: BookOpen },
       { to: "/writing", label: "Writing", icon: PenLine },
