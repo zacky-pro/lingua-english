@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactElement } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -27,7 +27,7 @@ function Inline({ text }: { text: string }) {
 /** Small, dependency-free renderer for the light markdown the tutor writes. */
 export function RichText({ text, className }: { text: string; className?: string }) {
   const lines = text.replace(/\r/g, "").split("\n");
-  const blocks: JSX.Element[] = [];
+  const blocks: ReactElement[] = [];
   let list: string[] = [];
   let ordered = false;
 
