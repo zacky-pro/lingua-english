@@ -144,7 +144,7 @@ function LivePage() {
       ]);
       if (autoSpeak) speakBilingual(out.reply_en, out.reply_id);
       await award
-        .mutateAsync({ xp: 6, minutes: 1, speakingMinutes: 1 })
+        .mutateAsync({ xp: 6, minutes: 1, speaking_minutes: 1 })
         .catch(() => undefined);
     },
     onError: (err: unknown) =>
@@ -176,7 +176,7 @@ function LivePage() {
       <PageHeader
         icon={Sparkles}
         title="Ngobrol Live"
-        subtitle="Ngomong langsung pakai suara. Bimo jawab pakai Inggris + Indonesia dan ngoreksi santai kayak teman."
+        description="Ngomong langsung pakai suara. Bimo jawab pakai Inggris + Indonesia dan ngoreksi santai kayak teman."
       />
 
       <div className="flex flex-wrap items-center gap-2">
