@@ -115,14 +115,19 @@ function TutorPage() {
         {messages.map((m, i) => (
           <div key={i} className={cn("flex items-end gap-2", m.role === "user" ? "justify-end" : "justify-start")}>
             {m.role === "assistant" ? <AudioButton text={plainText(m.content)} label="Play answer" /> : null}
-            <p
+            <div
               className={cn(
-                "max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2.5 text-sm",
+                "max-w-[85%] rounded-2xl px-4 py-2.5 text-sm",
                 m.role === "user" ? "rounded-br-sm bg-primary text-primary-foreground" : "rounded-bl-sm bg-muted",
               )}
             >
-              {m.content}
-            </p>
+              {m.role === "assistant" ? (
+                <RichText text={m.content} />
+              ) : (
+                <p className="whitespace-pre-wrap">{m.content}</p>
+              )}
+            </div>
+
           </div>
         ))}
         {send.isPending ? (
