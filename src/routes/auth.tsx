@@ -76,9 +76,14 @@ function AuthPage() {
     });
     if (result.error) {
       setLoading(false);
-      toast.error("Google sign-in didn't work. Please try again.");
+      const detail =
+        typeof result.error === "string"
+          ? result.error
+          : ((result.error as { message?: string }).message ?? "");
+      toast.error(detail ? `Google sign-in failed: ${detail}` : "Google sign-in didn't work. Please try again.");
       return;
     }
+
     if (result.redirected) return;
     navigate({ to: "/dashboard" });
   }
