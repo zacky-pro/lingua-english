@@ -44,15 +44,20 @@ function AuthPage() {
     setLoading(true);
     try {
       if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/dashboard`,
+            emailRedirectTo: `${window.location.origin}/auth`,
             data: { display_name: name || email.split("@")[0] },
           },
         });
         if (error) throw error;
+        if (!data.session) {
+          toast.success("Akun dibuat! Cek email kamu dan klik link konfirmasi, lalu sign in.");
+          setMode("signin");
+          return;
+        }
         toast.success("Account created. Let's set up your learning path.");
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -62,7 +67,11 @@ function AuthPage() {
     } catch (error) {
       const message = error instanceof Error ? error.message : "Please try again.";
       toast.error(
-        message.includes("Invalid login") ? "Email or password isn't right. Please try again." : message,
+        message.includes("Invalid login")
+          ? "Email atau password salah. Coba lagi ya."
+          : message.includes("Email not confirmed")
+            ? "Email belum dikonfirmasi. Cek inbox kamu dulu ya."
+            : message,
       );
     } finally {
       setLoading(false);
