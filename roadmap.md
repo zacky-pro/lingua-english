@@ -4,3 +4,4 @@
 - [x] Google sign-in enabled with clear error messages
 - [x] Tutor answers rendered nicely (real model wired)
 - [x] Live voice buddy page (English + Indonesian, casual corrections)
+- [x] B1 full: 16 lessons + 4 module quizzes
