@@ -68,7 +68,7 @@ function LearnMap() {
               {course.modules.map((module) => (
                 <div key={module.id}>
                   <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold">
-                    <span aria-hidden>{module.icon ?? "📘"}</span>
+                    <span aria-hidden>{ICON_EMOJI[module.icon ?? ""] ?? module.icon ?? "📘"}</span>
                     {module.title}
                   </h3>
                   <ul className="grid gap-2 sm:grid-cols-2">
@@ -114,3 +114,9 @@ function LearnMap() {
     </div>
   );
 }
+
+const ICON_EMOJI: Record<string, string> = {
+  Type: "🔤", Hand: "👋", Palette: "🎨", PenLine: "✏️", Sun: "☀️", ShoppingBag: "🛍️", Map: "🗺️",
+  History: "📜", Plane: "✈️", Sparkles: "✨", MessageCircle: "💬", Briefcase: "💼", HeartPulse: "🩺",
+  Mic: "🎤", GraduationCap: "🎓", Crown: "👑",
+};
