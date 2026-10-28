@@ -56,12 +56,18 @@ export function useProfile() {
       if (data) return data as Profile;
       const fallbackName =
         (user.user_metadata?.["display_name"] as string) || user.email?.split("@")[0] || "Learner";
-      const { data: created, error: insertError } = await supabase
+      // Upsert with ignoreDuplicates makes first sign-in race-safe: two tabs
+      // creating the profile at once no longer fail with a duplicate key.
+      const { error: upsertError } = await supabase
         .from("profiles")
-        .insert({ id: user.id, display_name: fallbackName })
+        .upsert({ id: user.id, display_name: fallbackName }, { onConflict: "id", ignoreDuplicates: true });
+      if (upsertError) throw upsertError;
+      const { data: created, error: selectError } = await supabase
+        .from("profiles")
         .select("*")
+        .eq("id", user.id)
         .single();
-      if (insertError) throw insertError;
+      if (selectError) throw selectError;
       return created as Profile;
     },
   });
