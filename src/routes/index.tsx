@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 import { LEVELS, LEVEL_META } from "@/lib/lingua";
 
 export const Route = createFileRoute("/")({
