@@ -103,12 +103,20 @@ function Landing() {
             <span className="font-display text-xl font-extrabold tracking-tight">LINGUA</span>
           </span>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" asChild>
-              <Link to="/auth">Sign in</Link>
-            </Button>
-            <Button asChild>
-              <Link to="/auth">Start free</Link>
-            </Button>
+            {signedIn ? (
+              <Button asChild>
+                <Link to="/dashboard">Open Dashboard</Link>
+              </Button>
+            ) : (
+              <>
+                <Button variant="ghost" asChild>
+                  <Link to="/auth">Sign in</Link>
+                </Button>
+                <Button asChild>
+                  <Link to="/auth">Start free</Link>
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </header>
