@@ -66,34 +66,72 @@ function AuthPage() {
       navigate({ to: "/dashboard" });
     } catch (error) {
       const message = error instanceof Error ? error.message : "Please try again.";
-      toast.error(
-        message.includes("Invalid login")
-          ? "Email atau password salah. Coba lagi ya."
-          : message.includes("Email not confirmed")
-            ? "Email belum dikonfirmasi. Cek inbox kamu dulu ya."
-            : message,
-      );
+      const lower = message.toLowerCase();
+      if (lower.includes("invalid login")) {
+        toast.error("Email atau password salah. Coba lagi ya.");
+      } else if (lower.includes("email not confirmed")) {
+        toast.error("Email belum dikonfirmasi. Cek inbox kamu dulu ya.");
+      } else if (lower.includes("already registered")) {
+        toast.error("Email ini sudah terdaftar. Coba sign in dulu, atau pakai 'Forgot your password?'.");
+      } else if (lower.includes("rate limit") || lower.includes("429")) {
+        toast.error("Terlalu banyak percobaan. Tunggu beberapa menit, lalu coba lagi ya.");
+      } else if (lower.includes("password")) {
+        toast.error("Password minimal 6 karakter dan jangan terlalu mudah ditebak ya.");
+      } else {
+        toast.error(message);
+      }
     } finally {
       setLoading(false);
     }
   }
 
+  /**
+   * Managed Google sign-in runs through Lovable's OAuth broker, which only
+   * exists on Lovable-hosted origins. On any other deployment (e.g. a Vercel
+   * domain) we call Supabase Auth directly — that path works once the owner
+   * configures their own Google OAuth credentials in the auth dashboard.
+   */
+  function isLovableHosted(): boolean {
+    if (typeof window === "undefined") return true;
+    const host = window.location.hostname;
+    return host.endsWith(".lovable.app") || host.endsWith(".lovable.dev") || host === "localhost";
+  }
+
   async function handleGoogle() {
     setLoading(true);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
-    if (result.error) {
-      setLoading(false);
-      const err = result.error as unknown;
-      const detail =
-        typeof err === "string" ? err : ((err as { message?: string } | null)?.message ?? "");
-      toast.error(detail ? `Google sign-in failed: ${detail}` : "Google sign-in didn't work. Please try again.");
-      return;
-    }
+    try {
+      if (!isLovableHosted()) {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: { redirectTo: window.location.origin },
+        });
+        if (error) throw error;
+        // Full-page redirect to Google happens next.
+        return;
+      }
 
-    if (result.redirected) return;
-    navigate({ to: "/dashboard" });
+      const result = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: window.location.origin,
+      });
+      if (result.error) {
+        const err = result.error as unknown;
+        const detail =
+          typeof err === "string" ? err : ((err as { message?: string } | null)?.message ?? "");
+        toast.error(detail ? `Google sign-in failed: ${detail}` : "Google sign-in didn't work. Please try again.");
+        return;
+      }
+      if (result.redirected) return;
+      navigate({ to: "/dashboard" });
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : "";
+      toast.error(
+        detail
+          ? `Google sign-in gagal: ${detail}`
+          : "Google sign-in gagal. Coba lagi atau pakai email ya.",
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function handleReset() {
@@ -102,7 +140,7 @@ function AuthPage() {
       return;
     }
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth`,
+      redirectTo: `${window.location.origin}/reset-password`,
     });
     if (error) toast.error("We couldn't send that email. Please try again.");
     else toast.success("Check your inbox for the reset link.");
