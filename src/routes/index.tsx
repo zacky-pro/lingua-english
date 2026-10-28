@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import {
   ArrowRight,
   Award,
@@ -70,6 +72,26 @@ const FEATURES = [
 ];
 
 function Landing() {
+  const [signedIn, setSignedIn] = useState(false);
+
+  useEffect(() => {
+    // Surface OAuth errors (e.g. the user cancelled the Google consent screen)
+    // instead of leaving a bare landing page, and clean the URL.
+    const params = new URLSearchParams(window.location.search);
+    const oauthError = params.get("error_description") ?? params.get("error");
+    if (oauthError) {
+      toast.error(`Google sign-in tidak jadi: ${oauthError}`);
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+    let active = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (active) setSignedIn(!!data.session);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-20 border-b border-border bg-background/85 backdrop-blur">
