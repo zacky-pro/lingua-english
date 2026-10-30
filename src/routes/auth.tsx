@@ -54,7 +54,16 @@ function AuthPage() {
         });
         if (error) throw error;
         if (!data.session) {
-          toast.success("Akun dibuat! Cek email kamu dan klik link konfirmasi, lalu sign in.");
+          // With email confirmation on, an existing account comes back as a
+          // user with zero identities and no error — say so instead of the
+          // misleading "check your email".
+          const alreadyRegistered =
+            !!data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0;
+          if (alreadyRegistered) {
+            toast.error("Email ini sudah terdaftar. Coba sign in dulu, atau pakai 'Forgot your password?'.");
+          } else {
+            toast.success("Akun dibuat! Cek email kamu dan klik link konfirmasi, lalu sign in.");
+          }
           setMode("signin");
           return;
         }
