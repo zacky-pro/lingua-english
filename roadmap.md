@@ -5,3 +5,4 @@
 - [x] Tutor answers rendered nicely (real model wired)
 - [x] Live voice buddy page (English + Indonesian, casual corrections)
 - [x] B1 full: 16 lessons + 4 module quizzes
+- [x] Auth repair: /reset-password page, duplicate-email handling, race-safe profile creation, OAuth error surfacing, Google fallback for non-Lovable origins
